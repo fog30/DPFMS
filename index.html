@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Farm Management System</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+
+body{
+overflow-x:hidden;
+font-family:'Segoe UI', sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar{
+height:100vh;
+background:#1f4d2b; /* dark green */
+color:white;
+padding-top:20px;
+position:fixed;
+width:220px;
+}
+
+.sidebar h4{
+font-weight:bold;
+margin-bottom:30px;
+}
+
+.sidebar a{
+display:block;
+color:white;
+padding:12px 20px;
+text-decoration:none;
+transition:0.3s;
+border-left:4px solid transparent;
+}
+
+.sidebar a:hover{
+background:#2e7d32;
+border-left:4px solid #a5d6a7;
+padding-left:25px;
+}
+
+.sidebar i{
+margin-right:10px;
+}
+
+/* HEADER */
+.header{
+background:#ffffff;
+padding:15px;
+border-bottom:1px solid #ddd;
+margin-left:220px;
+}
+
+/* CONTENT */
+.content{
+padding:20px;
+margin-left:220px;
+background: linear-gradient(135deg, #f5e6ca, #d2b48c);
+min-height:100vh;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h4 class="text-center">🌾 FMS</h4>
+
+<a href="#" onclick="loadPage('dashboard.html')">
+<i class="fas fa-chart-line"></i> Dashboard
+</a>
+
+<a href="#" onclick="loadPage('crops.html')">
+<i class="fas fa-seedling"></i> Crops
+</a>
+
+<a href="#" onclick="loadPage('livestock.html')">
+<i class="fas fa-cow"></i> Livestock
+</a>
+
+<a href="#" onclick="loadPage('products.html')">
+<i class="fas fa-box"></i> Products
+</a>
+
+<a href="#" onclick="loadPage('payment.html')">
+<i class="fas fa-credit-card"></i> Payments
+</a>
+
+<a href="#" onclick="loadPage('reports.html')">
+<i class="fas fa-file-alt"></i> Reports
+</a>
+
+</div>
+
+<div class="header">
+<h3>Farm Management System</h3>
+</div>
+
+<div class="content" id="mainContent">
+
+<h4>Welcome to the Farm Management Dashboard 🌾</h4>
+<p>Select a module from the sidebar.</p>
+
+</div>
+
+<script>
+
+function loadPage(page){
+
+fetch(page + "?v=" + new Date().getTime())
+
+.then(response => response.text())
+
+.then(data => {
+
+document.getElementById("mainContent").innerHTML = data
+
+setTimeout(function(){
+
+/* PAYMENT MODULE */
+if(page === "payment.html"){
+
+if(typeof loadProductsDropdown === "function"){
+loadProductsDropdown()
+}
+
+if(typeof loadPayments === "function"){
+loadPayments()
+}
+
+}
+
+/* PRODUCTS MODULE */
+if(page === "products.html"){
+
+if(typeof loadProducts === "function"){
+loadProducts()
+}
+
+}
+
+/* REPORTS MODULE */
+if(page === "reports.html"){
+
+if(typeof loadReports === "function"){
+loadReports()
+}
+
+}
+
+/* DASHBOARD MODULE */
+if(page === "dashboard.html"){
+
+if(typeof loadDashboard === "function"){
+loadDashboard()
+}
+
+}
+
+},100)
+
+})
+
+.catch(error=>{
+document.getElementById("mainContent").innerHTML =
+"<h4 style='color:red'>Error loading page</h4>"
+})
+
+}
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js?v=3"></script>
+
+</body>
+</html>

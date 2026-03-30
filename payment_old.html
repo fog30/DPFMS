@@ -1,0 +1,153 @@
+<script>
+
+function loadProducts(){
+
+let dropdown = document.getElementById("payment_product")
+
+dropdown.innerHTML = "<option value=''>Select Product</option>"
+
+let products = JSON.parse(localStorage.getItem("products")) || []
+
+products.forEach(function(p){
+
+let option = document.createElement("option")
+
+option.value = p.name
+option.textContent = p.name
+
+dropdown.appendChild(option)
+
+})
+
+}
+
+
+function setPrice(){
+
+let selected = document.getElementById("payment_product").value
+
+let products = JSON.parse(localStorage.getItem("products")) || []
+
+let product = products.find(p => p.name === selected)
+
+if(product){
+document.getElementById("price_pay").value = product.price
+}
+
+}
+
+
+function calculateTotal(){
+
+let price = document.getElementById("price_pay").value
+let quantity = document.getElementById("quantity_pay").value
+
+if(price=="" || quantity==""){
+alert("Enter quantity")
+return
+}
+
+document.getElementById("total_pay").value = price * quantity
+
+}
+
+
+function savePayment(){
+
+let product = document.getElementById("payment_product").value
+let customer = document.getElementById("customer_name").value
+let quantity = document.getElementById("quantity_pay").value
+let total = document.getElementById("total_pay").value
+
+if(product=="" || customer=="" || quantity=="" || total==""){
+alert("Fill all fields")
+return
+}
+
+let payments = JSON.parse(localStorage.getItem("payments")) || []
+
+payments.push({
+product:product,
+customer:customer,
+quantity:quantity,
+total:total
+})
+
+localStorage.setItem("payments", JSON.stringify(payments))
+
+loadPayments()
+clearPayment()
+
+}
+
+
+function loadPayments(){
+
+let table = document.getElementById("paymentTable")
+
+table.innerHTML=""
+
+let payments = JSON.parse(localStorage.getItem("payments")) || []
+
+payments.forEach(function(p){
+
+table.innerHTML += `
+<tr>
+<td>${p.product}</td>
+<td>${p.customer}</td>
+<td>${p.quantity}</td>
+<td>${p.total}</td>
+</tr>
+`
+
+})
+
+}
+
+
+function clearPayment(){
+
+document.getElementById("payment_product").value=""
+document.getElementById("customer_name").value=""
+document.getElementById("quantity_pay").value=""
+document.getElementById("price_pay").value=""
+document.getElementById("date_pay").value=""
+document.getElementById("total_pay").value=""
+
+}
+
+
+function generateBill(){
+
+const { jsPDF } = window.jspdf
+const doc = new jsPDF()
+
+let product = document.getElementById("payment_product").value
+let customer = document.getElementById("customer_name").value
+let quantity = document.getElementById("quantity_pay").value
+let price = document.getElementById("price_pay").value
+let total = document.getElementById("total_pay").value
+let date = document.getElementById("date_pay").value
+
+doc.setFontSize(18)
+doc.text("Farm Management System Bill",20,20)
+
+doc.setFontSize(12)
+doc.text("Customer: "+customer,20,40)
+doc.text("Product: "+product,20,50)
+doc.text("Quantity: "+quantity,20,60)
+doc.text("Price: "+price,20,70)
+doc.text("Total: "+total,20,80)
+doc.text("Date: "+date,20,90)
+
+doc.save("farm_bill.pdf")
+
+}
+
+
+setTimeout(function(){
+loadProducts()
+loadPayments()
+},200)
+
+</script>

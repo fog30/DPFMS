@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Livestock</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5e6ca, #d2b48c);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .main-card {
+      border-radius: 20px;
+      background: #ffffff;
+    }
+
+    h2, h4 {
+      color: #5a3e2b;
+      font-weight: 600;
+    }
+
+    .form-label {
+      color: #5a3e2b;
+      font-weight: 500;
+    }
+
+    .btn-success {
+      background-color: #6b8e23;
+      border: none;
+    }
+
+    .btn-success:hover {
+      background-color: #556b2f;
+    }
+
+    .btn-primary {
+      background-color: #8b5e3c;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #6f4e37;
+    }
+
+    .btn-edit {
+      background-color: #8b5e3c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .btn-edit:hover {
+      background-color: #6f4e37;
+    }
+
+    .table thead {
+      background-color: #6f4e37;
+      color: white;
+    }
+
+    .table {
+      background: white;
+    }
+
+    .card-shadow {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border-radius: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+  <!-- FORM -->
+  <div class="card main-card card-shadow p-4">
+
+    <h2 class="text-center mb-4">🐄 Livestock Management</h2>
+
+    <form>
+
+      <div class="row g-3">
+
+        <div class="col-md-4">
+          <label class="form-label">Animal Type</label>
+          <input id="animal_type" type="text" class="form-control" placeholder="Enter animal type">
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Product</label>
+          <input id="product" type="text" class="form-control" placeholder="Enter product">
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Quoted Animal</label>
+          <input id="quoted_animal" type="number" class="form-control" placeholder="Enter quantity">
+        </div>
+
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="button" onclick="addAnimal()" class="btn btn-success px-4 me-2">Save</button>
+        <button type="button" onclick="updateAnimal()" class="btn btn-primary px-4">Update</button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <br>
+
+  <!-- TABLE -->
+  <h4 class="text-center">📊 Livestock Records</h4>
+
+  <div class="card card-shadow p-3">
+
+    <table class="table table-hover text-center">
+
+      <thead>
+        <tr>
+          <th>Animal Type</th>
+          <th>Product</th>
+          <th>Quoted Animal</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody id="livestockTable"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</body>
+</html>
