@@ -115,6 +115,20 @@ min-height:100vh;
 
 </div>
 
+<div id="receipt" style="display:none; width:300px; padding:20px; border:1px solid #000; font-family:monospace;">
+
+  <h3 style="text-align:center;">Farm Management</h3>
+  <hr>
+
+  <p><b>Payment ID:</b> <span id="rPaymentID"></span></p>
+  <p><b>Product:</b> <span id="rProduct"></span></p>
+  <p><b>Amount:</b> ₹<span id="rAmount"></span></p>
+
+  <hr>
+  <p style="text-align:center;">Thank You 🌱</p>
+
+</div>
+
 <script>
 
 function loadPage(page){
@@ -179,6 +193,8 @@ document.getElementById("mainContent").innerHTML =
 })
 
 }
+
+
 
 </script>
 

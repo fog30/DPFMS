@@ -1,3 +1,5 @@
+
+
 /* =====================================
 CROPS MODULE
 ===================================== */
@@ -431,14 +433,17 @@ table.innerHTML += `
 
 }
 
-function deletePayment(id){
+function deletePayment(id) {
+  if (confirm("Are you sure you want to delete?")) {
 
-let data = new FormData()
-data.append("id",id)
+    fetch("delete_payment.php?id=" + id)
+    .then(res => res.text())
+    .then(data => {
+      alert(data);
+      loadPayments(); // refresh table
+    });
 
-fetch("delete_payment.php",{method:"POST",body:data})
-.then(()=>loadPayments())
-
+  }
 }
 
 function generateBill(){
@@ -462,10 +467,12 @@ doc.save("bill.pdf")
 }
 
 function loadReports(){
+console.log("REPORT FUNCTION RUNNING 🔥");
 
 fetch("get_reports.php")
 .then(res=>res.json())
 .then(data=>{
+console.log(data);
 
 let table = document.getElementById("reportTable")
 if(!table) return
@@ -487,7 +494,11 @@ table.innerHTML += `
 <td>${r.quantity}</td>
 <td>${r.total_price}</td>
 <td>${r.payment_date}</td>
-
+<td>
+        
+ <button onclick="printReceipt(${r.id})">Print</button>
+        
+      </td>
 </tr>
 `
 
@@ -608,3 +619,37 @@ legend:{display:false}
 });
 
 }  
+
+function generateReceipt(paymentID, product, amount){
+
+  document.getElementById("rPaymentID").innerText = paymentID;
+  document.getElementById("rProduct").innerText = product;
+  document.getElementById("rAmount").innerText = amount;
+
+  printReceipt();
+}
+
+function printReceipt(){
+
+  var content = document.getElementById("receipt").innerHTML;
+
+  var myWindow = window.open('', '', 'width=400,height=600');
+
+  myWindow.document.write(`
+    <html>
+      <head>
+        <title>Receipt</title>
+      </head>
+      <body style="font-family:monospace;">
+        ${content}
+      </body>
+    </html>
+  `);
+
+  myWindow.document.close();
+  myWindow.print();
+}
+
+function printReceipt(id){
+  window.open("receipt.php?id=" + id, "_blank");
+}

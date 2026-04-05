@@ -2,7 +2,7 @@
 
 include "db.php";
 
-$sql = "SELECT * FROM payment ORDER BY payment_date DESC";
+$sql = "SELECT * FROM payment ORDER BY id DESC";
 
 $result = mysqli_query($conn,$sql);
 

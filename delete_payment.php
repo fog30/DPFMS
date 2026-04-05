@@ -1,11 +1,22 @@
 <?php
 
-$conn = new mysqli("localhost","root","","dpfms");
+include "db.php";
 
-$id = $_POST['id'];
+if(isset($_GET['id'])){
 
-$conn->query("DELETE FROM payment WHERE id='$id'");
+    $id = $_GET['id'];
 
-echo "deleted";
+    $stmt = $conn->prepare("DELETE FROM payment WHERE id = ?");
+    $stmt->bind_param("i", $id);
+
+    if($stmt->execute()){
+        echo "success";
+    } else {
+        echo "error";
+    }
+
+} else {
+    echo "no id";
+}
 
 ?>
